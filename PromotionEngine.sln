@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotionEngine.Console", "PromotionEngine.Console\PromotionEngine.Console.csproj", "{38C32A3E-D63E-4653-B98F-7EB768E629B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionEngine.Console", "PromotionEngine.Console\PromotionEngine.Console.csproj", "{38C32A3E-D63E-4653-B98F-7EB768E629B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotionEngine", "PromotionEngine\PromotionEngine.csproj", "{E2101373-C750-4D68-A1DF-2B45CC3007EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionEngine", "PromotionEngine\PromotionEngine.csproj", "{E2101373-C750-4D68-A1DF-2B45CC3007EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotionEngine.Tests", "PromotionEngine.Tests\PromotionEngine.Tests.csproj", "{B8A3FE8D-6798-448A-A197-28ECE9D2DF9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionEngine.Tests", "PromotionEngine.Tests\PromotionEngine.Tests.csproj", "{B8A3FE8D-6798-448A-A197-28ECE9D2DF9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{459B1335-81A4-485E-B766-DFBC5A6FADF4}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{38C32A3E-D63E-4653-B98F-7EB768E629B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,5 +60,11 @@ Global
 		{B8A3FE8D-6798-448A-A197-28ECE9D2DF9C}.Release|x64.Build.0 = Release|Any CPU
 		{B8A3FE8D-6798-448A-A197-28ECE9D2DF9C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B8A3FE8D-6798-448A-A197-28ECE9D2DF9C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13593C68-07DF-40E3-910D-ED3FC039D5B3}
 	EndGlobalSection
 EndGlobal
