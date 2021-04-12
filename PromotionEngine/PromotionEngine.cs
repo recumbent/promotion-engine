@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using PromotionEngine.Types;
 
 namespace PromotionEngine
 {
     public class PromotionEngine
     {
-        public void TotalAfterPromotions()
+        public decimal TotalAfterPromotions(List<BasketItem> basket)
         {
-            // Do something interesting, in due course 
+            return 0M;
         }
     }
 }

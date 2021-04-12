@@ -4,3 +4,4 @@
 **/*.user
 .vs/
 /_NCrunch_PromotionEngine
+/.ionide

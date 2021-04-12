@@ -1,15 +1,23 @@
-using System;
+using System.Collections.Generic;
+
 using Xunit;
+using FluentAssertions;
+
+using PromotionEngine.Types;
 
 namespace PromotionEngine.Tests
 {
     public class PromotionEngineTests
     {
+        private List<BasketItem> emptyBasket = new List<BasketItem>();
+
         [Fact]
-        public void Should_be_able_call_TotalAfterPromotions()
+        public void Empty_basket_should_return_total_of_zero()
         {
             var engine = new PromotionEngine();
-            engine.TotalAfterPromotions();
+            var result = engine.TotalAfterPromotions(emptyBasket);
+
+            result.Should().Be(0M);
         }
     }
 }
