@@ -32,5 +32,23 @@ namespace PromotionEngine.Tests
 
             result.Should().Be(itemPrice);
         }
+
+        [Fact]
+        public void Complex_basket_with_no_promotins_returns_total()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 2, 20M),
+                new BasketItem("B", 3, 30M),
+                new BasketItem("C", 4, 40M)
+            };
+
+            var total = 2 * 20M + 3 * 30M + 4 * 40M;
+
+            var engine = new PromotionEngine();
+            var result = engine.TotalAfterPromotions(basket, emptyPromotions);
+
+            result.Should().Be(total);
+        }
     }
 }
