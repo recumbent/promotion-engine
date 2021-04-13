@@ -18,3 +18,13 @@ dotnet new classlib --language C# --name PromotionEngine
 dotnet new xunit --language C# --name PromotionEngine.Tests
 dotnet sln add .\PromotionEngine
 dotnet sln add .\PromotionEngine.Tests
+
+## Design leap
+
+A promotion is defined by a function - `Func<List<BasketItem>,TBA>`
+
+It's a leap because I don't quite see how to test may way there.
+
+But that means that I can start by testing a function `bool ShouldApplyPromotion(List<BasketItem> basket)` for the first promotion type (multibuy)
+
+
