@@ -8,7 +8,7 @@ namespace PromotionEngine
     {
         public static bool ShouldApplyPromotion(List<BasketItem> basket)
         {
-            return false;
+            return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
         }
     }
 }

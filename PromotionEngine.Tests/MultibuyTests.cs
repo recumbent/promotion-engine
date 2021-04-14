@@ -46,5 +46,40 @@ namespace PromotionEngine.Tests
 
             result.Should().BeFalse();
         }
+
+        [Fact]
+        public void ShouldApplyShouldReturnTrueIfBasketHasExactly3As()
+        {
+            var basket = new List<BasketItem>()
+            { new BasketItem("A", 3, 50) };
+            var result = Multibuy.ShouldApplyPromotion(basket);
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ShouldApplyShouldReturnTrueIfBasketContainsMoreThan3As()
+        {
+            var basket = new List<BasketItem>()
+            { new BasketItem("A", 4, 50) };
+            var result = Multibuy.ShouldApplyPromotion(basket);
+
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ShouldApplyShouldReturnTrueIfBasketContainsAtLeast3AsAndDiverseOtherItems()
+        { 
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 4, 50),
+                new BasketItem("B", 3, 30),
+                new BasketItem("C", 2, 20), 
+                new BasketItem("D", 1, 15) 
+            };
+            var result = Multibuy.ShouldApplyPromotion(basket);
+
+            result.Should().BeTrue();
+        }
     }
 }
