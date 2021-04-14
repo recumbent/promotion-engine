@@ -18,7 +18,7 @@ namespace PromotionEngine.Tests
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -29,7 +29,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 2, 50) };
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -44,7 +44,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 3, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -55,7 +55,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 3, 50) };
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             total.Should().Be(130M);
             newBasket.Should().BeEmpty();
@@ -66,7 +66,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
                 { new BasketItem("A", 4, 50) };
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
                 { new BasketItem("A", 1, 50) };
@@ -85,7 +85,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20), 
                 new BasketItem("D", 1, 15) 
             };
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             {
@@ -105,7 +105,7 @@ namespace PromotionEngine.Tests
             var basket = new List<BasketItem>()
             { new BasketItem("A", 10, 50) };
         
-            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { new BasketItem("A", 1, 50) };

@@ -18,7 +18,7 @@ namespace PromotionEngine.Tests
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -29,7 +29,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("C", 1, 20) };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -40,7 +40,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("D", 1, 15) };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -54,7 +54,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("A", 1, 50),
                 new BasketItem("B", 2, 30) 
             };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -69,7 +69,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 0, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var (total1, newBasket1) = PairedBuy.AppliedTotal(basket1);
+            var (total1, newBasket1) = Promotions.PairedBuy(basket1);
 
             total1.Should().Be(0M);
             newBasket1.Should().BeEquivalentTo(basket1);
@@ -79,7 +79,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20),
                 new BasketItem("D", 0, 15) 
             };
-            var (total2, newBasket2) = PairedBuy.AppliedTotal(basket2);
+            var (total2, newBasket2) = Promotions.PairedBuy(basket2);
 
             total2.Should().Be(0M);
             newBasket2.Should().BeEquivalentTo(basket2);
@@ -94,7 +94,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("D", 1, 15)
             };
 
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             total.Should().Be(30M);
             newBasket.Should().BeEmpty();
@@ -108,7 +108,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { 
@@ -128,7 +128,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             {
@@ -148,7 +148,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 4, 20),
                 new BasketItem("D", 3, 15) 
             };
-            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = Promotions.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { 

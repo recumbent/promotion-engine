@@ -52,3 +52,9 @@ There is common code between the functions, I've attached that to one of the cla
 One more step for the functions, currently they just apply once, but we need to apply the promotion as many times as its valid.
 
 To do that we can extend the function to apply as many times as necessary, summing the promoted price as we go.
+
+## Putting it all together
+
+I've got functions that apply a single promotion, so can I apply a list of promotions to a basket?
+
+First I'll tidy up a bit, fewer files needed to achieve the same result.
