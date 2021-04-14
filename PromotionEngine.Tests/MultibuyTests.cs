@@ -18,9 +18,10 @@ namespace PromotionEngine.Tests
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var result = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -28,9 +29,10 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 2, 50) };
-            var result = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -42,9 +44,10 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 3, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var result = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -52,19 +55,24 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 3, 50) };
-            var result = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(130M);
+            total.Should().Be(130M);
+            newBasket.Should().BeEmpty();
         }
 
         [Fact]
         public void ShouldApplyShouldReturn130fBasketContainsMoreThan3As()
         {
             var basket = new List<BasketItem>()
-            { new BasketItem("A", 4, 50) };
-            var result = Multibuy.AppliedTotal(basket);
+                { new BasketItem("A", 4, 50) };
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(130M);
+            var expectedBasket = new List<BasketItem>()
+                { new BasketItem("A", 1, 50) };
+
+            total.Should().Be(130M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
         }
 
         [Fact]
@@ -77,9 +85,18 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20), 
                 new BasketItem("D", 1, 15) 
             };
-            var result = Multibuy.AppliedTotal(basket);
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
 
-            result.Should().Be(130M);
+            var expectedBasket = new List<BasketItem>()
+            {
+                new BasketItem("A", 1, 50),
+                new BasketItem("B", 3, 30),
+                new BasketItem("C", 2, 20), 
+                new BasketItem("D", 1, 15) 
+            };
+
+            total.Should().Be(130M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
         }
     }
 }

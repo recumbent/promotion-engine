@@ -32,3 +32,13 @@ When that works, I can repeat by testing a function for the second promotion typ
 ## Progressing from can I apply?
 
 If the promotion can be applied then we care about the new price for those items, so we want a function that returns if its been applied and the total for the promoted items. First pass is just return the single promotion value instead of true/false
+
+## Stuck
+
+At this point I can detect if I should apply and I can return the amount for a single pass of the promotion.
+
+The question here is how to progress to the next step - i.e. _what_ is the next step.
+
+So another leap, I want to get the value of applied promotion and then to remove the items from the basket - which means I want to return a tuple (appliedTotal, remainingBasket)
+
+That is my promotion function maps from a basket, to a total and a basket. If the promotion does not apply the total is zero and the basket is unchanged.
