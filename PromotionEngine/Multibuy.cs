@@ -7,22 +7,22 @@ namespace PromotionEngine
 {
     public class Multibuy
     {
+        public static BasketItem ReduceQuantityForSku(BasketItem item, string sku, int quantity)
+        {
+            if (item.Sku == sku)
+            {
+                BasketItem updated = item with { Quantity = item.Quantity - quantity };
+                return new BasketItem(item.Sku, item.Quantity - quantity, item.UnitCost);
+            }
+
+            return item;
+        }
+
         public static (decimal total, List<BasketItem> basket) AppliedTotal(List<BasketItem> basket)
         {
             bool ShouldApplyPromotion(List<BasketItem> basket)
             {
                 return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
-            }
-
-            BasketItem ReduceQuantityForSku(BasketItem item, string sku, int quantity)
-            {
-                if (item.Sku == sku)
-                {
-                    BasketItem updated = item with { Quantity = item.Quantity - quantity };
-                    return new BasketItem(item.Sku, item.Quantity - quantity, item.UnitCost);
-                }
-
-                return item;
             }
 
             if (ShouldApplyPromotion(basket))

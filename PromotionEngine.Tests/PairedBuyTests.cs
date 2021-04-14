@@ -18,9 +18,10 @@ namespace PromotionEngine.Tests
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -28,9 +29,10 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("C", 1, 20) };
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -38,9 +40,10 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("D", 1, 15) };
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         [Fact]
@@ -51,9 +54,10 @@ namespace PromotionEngine.Tests
                 new BasketItem("A", 1, 50),
                 new BasketItem("B", 2, 30) 
             };
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(0M);
+            total.Should().Be(0M);
+            newBasket.Should().BeEquivalentTo(basket);
         }
 
         // Arguably we should never have a zero quantity, but its would be appropriate to test both cases
@@ -65,18 +69,20 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 0, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var result1 = PairedBuy.AppliedTotal(basket1);
+            var (total1, newBasket1) = PairedBuy.AppliedTotal(basket1);
 
-            result1.Should().Be(0M);
+            total1.Should().Be(0M);
+            newBasket1.Should().BeEquivalentTo(basket1);
 
             var basket2 = new List<BasketItem>()
             {
                 new BasketItem("C", 1, 20),
                 new BasketItem("D", 0, 15) 
             };
-            var result2 = PairedBuy.AppliedTotal(basket2);
+            var (total2, newBasket2) = PairedBuy.AppliedTotal(basket2);
 
-            result2.Should().Be(0M);
+            total2.Should().Be(0M);
+            newBasket2.Should().BeEquivalentTo(basket2);
         }
 
         [Fact]
@@ -88,9 +94,10 @@ namespace PromotionEngine.Tests
                 new BasketItem("D", 1, 15)
             };
 
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(30M);
+            total.Should().Be(30M);
+            newBasket.Should().BeEmpty();
         }
 
         [Fact]
@@ -101,9 +108,14 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(30M);
+            var expectedBasket = new List<BasketItem>()
+            { 
+                new BasketItem("C", 1, 20),
+            };
+            total.Should().Be(30M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
         }
 
         [Fact]
@@ -116,9 +128,17 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 3, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var result = PairedBuy.AppliedTotal(basket);
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
-            result.Should().Be(30M);
+            var expectedBasket = new List<BasketItem>()
+            {
+                new BasketItem("A", 1, 50),
+                new BasketItem("B", 2, 30),
+                new BasketItem("C", 2, 20), 
+                new BasketItem("D", 3, 15) 
+            };
+            total.Should().Be(30M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
         }
     }
 }
