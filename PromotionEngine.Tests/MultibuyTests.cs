@@ -15,26 +15,26 @@ namespace PromotionEngine.Tests
 
         // TODO: Ideally this would be a Theory (data driven) test for "don't apply" cases, need to see where we go first
         [Fact]
-        public void ShouldApplyShouldReturnFalseIfBasketIsEmpty()
+        public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeFalse();
+            result.Should().Be(0M);
         }
 
         [Fact]
-        public void ShouldApplyShouldReturnFalseIfBasketHasTwoAs()
+        public void ShouldApplyShouldReturnZeroIfBasketHasTwoAs()
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 2, 50) };
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeFalse();
+            result.Should().Be(0M);
         }
 
         [Fact]
-        public void ShouldApplyShouldReturnFalseIfBasketHasWrongItemTypes()
+        public void ShouldApplyShouldReturnZeroIfBasketHasWrongItemTypes()
         {
             var basket = new List<BasketItem>()
             {
@@ -42,33 +42,33 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 3, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeFalse();
+            result.Should().Be(0M);
         }
 
         [Fact]
-        public void ShouldApplyShouldReturnTrueIfBasketHasExactly3As()
+        public void ShouldApplyShouldReturn130IfBasketHasExactly3As()
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 3, 50) };
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeTrue();
+            result.Should().Be(130M);
         }
 
         [Fact]
-        public void ShouldApplyShouldReturnTrueIfBasketContainsMoreThan3As()
+        public void ShouldApplyShouldReturn130fBasketContainsMoreThan3As()
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 4, 50) };
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeTrue();
+            result.Should().Be(130M);
         }
 
         [Fact]
-        public void ShouldApplyShouldReturnTrueIfBasketContainsAtLeast3AsAndDiverseOtherItems()
+        public void ShouldApplyShouldReturn130IfBasketContainsAtLeast3AsAndDiverseOtherItems()
         { 
             var basket = new List<BasketItem>()
             {
@@ -77,9 +77,9 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20), 
                 new BasketItem("D", 1, 15) 
             };
-            var result = Multibuy.ShouldApplyPromotion(basket);
+            var result = Multibuy.AppliedTotal(basket);
 
-            result.Should().BeTrue();
+            result.Should().Be(130M);
         }
     }
 }

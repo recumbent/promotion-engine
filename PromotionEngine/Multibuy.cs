@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using PromotionEngine.Types;
 
@@ -6,9 +7,14 @@ namespace PromotionEngine
 {
     public class Multibuy
     {
-        public static bool ShouldApplyPromotion(List<BasketItem> basket)
+        public static object AppliedTotal(List<BasketItem> basket)
         {
-            return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
+            bool ShouldApplyPromotion(List<BasketItem> basket)
+            {
+                return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
+            }
+
+            return ShouldApplyPromotion(basket) ? 130 : 0;
         }
     }
 }
