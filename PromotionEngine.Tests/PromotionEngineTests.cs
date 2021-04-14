@@ -12,6 +12,14 @@ namespace PromotionEngine.Tests
         private List<BasketItem> emptyBasket = new List<BasketItem>();
         private List<Promotion> emptyPromotions = new List<Promotion>();
 
+        private List<BasketItem> testBasket = new List<BasketItem>()
+        {
+            new BasketItem("A", 5, 50M),
+            new BasketItem("B", 5, 30M),
+            new BasketItem("C", 2, 20M),
+            new BasketItem("D", 1, 15M)
+        };
+
         [Fact]
         public void Empty_basket_should_return_total_of_zero()
         {
@@ -49,6 +57,37 @@ namespace PromotionEngine.Tests
             var result = engine.TotalAfterPromotions(basket, emptyPromotions);
 
             result.Should().Be(total);
+        }
+
+        [Fact]
+        public void SingleMultibuy()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 3, 50M)
+            };
+
+            var promotions = new List<Promotion>() { new Promotion("3A for 130", Promotions.Multibuy) };
+            var engine = new PromotionEngine();
+            var result = engine.TotalAfterPromotions(basket, promotions);
+
+            result.Should().Be(130);
+        }
+
+        [Fact]
+        public void SinglePairedBuy()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("C", 1, 20M),
+                new BasketItem("D", 1, 15M)
+            };
+
+            var promotions = new List<Promotion>() { new Promotion("C + D for 30", Promotions.PairedBuy) };
+            var engine = new PromotionEngine();
+            var result = engine.TotalAfterPromotions(basket, promotions);
+
+            result.Should().Be(30);
         }
     }
 }

@@ -14,7 +14,17 @@ namespace PromotionEngine
 
         public decimal TotalAfterPromotions(List<BasketItem> basket, List<Promotion> promotions)
         {
-            return this.Total(basket);
+            var total = 0M;
+
+            foreach(var promo in promotions)
+            {
+                var (promotionTotal, newBasket) = promo.Applicator(basket);
+                total += promotionTotal;
+                basket = newBasket;
+            }
+            
+            total += this.Total(basket);
+            return total;
         }
     }
 }

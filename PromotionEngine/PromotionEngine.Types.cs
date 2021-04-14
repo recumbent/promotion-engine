@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace PromotionEngine.Types
 {
     public record BasketItem(string Sku, int Quantity, decimal UnitCost);
-    public record Promotion(string Placeholder);
+    public record Promotion(string Name, Func<List<BasketItem>, (decimal, List<BasketItem>)> Applicator);
 }
 

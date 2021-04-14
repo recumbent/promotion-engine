@@ -58,3 +58,7 @@ To do that we can extend the function to apply as many times as necessary, summi
 I've got functions that apply a single promotion, so can I apply a list of promotions to a basket?
 
 First I'll tidy up a bit, fewer files needed to achieve the same result.
+
+## Totals
+
+At this point we can define a "promotion" as a `Func<List<BasketItem>,(decimal,List<BasketItem>)>` and good things should happen.
