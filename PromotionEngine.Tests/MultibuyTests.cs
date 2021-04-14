@@ -98,5 +98,20 @@ namespace PromotionEngine.Tests
             total.Should().Be(130M);
             newBasket.Should().BeEquivalentTo(expectedBasket);
         }
+
+        [Fact]
+        public void ShouldApplyAsManyTimesAsNecessary()
+        {
+            var basket = new List<BasketItem>()
+            { new BasketItem("A", 10, 50) };
+        
+            var (total, newBasket) = Multibuy.AppliedTotal(basket);
+
+            var expectedBasket = new List<BasketItem>()
+            { new BasketItem("A", 1, 50) };
+
+            total.Should().Be(390M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
+        }
     }
 }

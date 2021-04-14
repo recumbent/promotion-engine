@@ -42,3 +42,13 @@ The question here is how to progress to the next step - i.e. _what_ is the next 
 So another leap, I want to get the value of applied promotion and then to remove the items from the basket - which means I want to return a tuple (appliedTotal, remainingBasket)
 
 That is my promotion function maps from a basket, to a total and a basket. If the promotion does not apply the total is zero and the basket is unchanged.
+
+## Tidying
+
+There is common code between the functions, I've attached that to one of the classes to share. I can go futher though (later) in that we have single named functions to do the job so we only need a single class.
+
+## Close
+
+One more step for the functions, currently they just apply once, but we need to apply the promotion as many times as its valid.
+
+To do that we can extend the function to apply as many times as necessary, summing the promoted price as we go.

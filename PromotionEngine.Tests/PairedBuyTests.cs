@@ -123,21 +123,38 @@ namespace PromotionEngine.Tests
         { 
             var basket = new List<BasketItem>()
             {
-                new BasketItem("A", 1, 50),
+                new BasketItem("A", 3, 50),
                 new BasketItem("B", 2, 30),
-                new BasketItem("C", 3, 20), 
+                new BasketItem("C", 1, 20), 
                 new BasketItem("D", 4, 15) 
             };
             var (total, newBasket) = PairedBuy.AppliedTotal(basket);
 
             var expectedBasket = new List<BasketItem>()
             {
-                new BasketItem("A", 1, 50),
+                new BasketItem("A", 3, 50),
                 new BasketItem("B", 2, 30),
-                new BasketItem("C", 2, 20), 
                 new BasketItem("D", 3, 15) 
             };
             total.Should().Be(30M);
+            newBasket.Should().BeEquivalentTo(expectedBasket);
+        }
+
+        [Fact]
+        public void ShouldApplyAsManyTimesAsNeccessary()
+        {
+            var basket = new List<BasketItem>()
+            { 
+                new BasketItem("C", 4, 20),
+                new BasketItem("D", 3, 15) 
+            };
+            var (total, newBasket) = PairedBuy.AppliedTotal(basket);
+
+            var expectedBasket = new List<BasketItem>()
+            { 
+                new BasketItem("C", 1, 20),
+            };
+            total.Should().Be(90M);
             newBasket.Should().BeEquivalentTo(expectedBasket);
         }
     }

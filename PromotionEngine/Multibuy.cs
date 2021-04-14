@@ -25,13 +25,14 @@ namespace PromotionEngine
                 return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
             }
 
-            if (ShouldApplyPromotion(basket))
+            var total = 0M;
+            while (ShouldApplyPromotion(basket))
             {
-                var reducedBasket = basket.Select(bi => ReduceQuantityForSku(bi, "A", 3)).Where(bi => bi.Quantity > 0).ToList();
-                return (130, reducedBasket);
+                basket = basket.Select(bi => ReduceQuantityForSku(bi, "A", 3)).Where(bi => bi.Quantity > 0).ToList();
+                total += 130;
             }
 
-            return (0, basket);
+            return (total, basket);
         }
     }
 }
