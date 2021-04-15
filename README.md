@@ -62,3 +62,69 @@ First I'll tidy up a bit, fewer files needed to achieve the same result.
 ## Totals
 
 At this point we can define a "promotion" as a `Func<List<BasketItem>,(decimal,List<BasketItem>)>` and good things should happen.
+
+...
+
+And indeed they do, I have a working solution to the problem (almost, I haven't yet address the second multibuy case).
+
+## Extensibility and utility
+
+The solution I have - a function per promotion - is easily extensible in that there is a clear pattern to add new promotions, i.e. write a new function - a simple pattern, easily tested.
+
+But practically we don't want to have to write a function for 3 x A = 130 and then another for 2 x B = 45.
+
+To solve this I could introduce classes (one per promotion type) as follows (include as `PromotionAsClass.cs`):
+
+```csharp
+    public interface IPromotion
+    {
+        (decimal total, List<BasketItem> basket) ApplyPromotion(List<BasketItem> basket);
+    }
+
+    public class MultiExample : IPromotion
+    {
+        private readonly string sku;
+        private readonly int quantityRequired;
+        private readonly decimal discountedCost;
+
+        public MultiExample(string sku, int quantityRequired, decimal discountedCost)
+        {
+            this.sku = sku;
+            this.quantityRequired = quantityRequired;
+            this.discountedCost = discountedCost;
+        }
+
+        public (decimal total, List<BasketItem> basket) ApplyPromotion(List<BasketItem> basket)
+        {
+            bool ShouldApplyPromotion(List<BasketItem> basket)
+            {
+                return basket.Exists(bi => (bi.Sku == this.sku && bi.Quantity >= this.quantityRequired));
+            }
+
+            var total = 0M;
+            while (ShouldApplyPromotion(basket))
+            {
+                basket = basket.Select(bi => Promotions.ReduceQuantityForSku(bi, this.sku, this.quantityRequired)).Where(bi => bi.Quantity > 0).ToList();
+                total += this.discountedCost;
+            }
+
+            return (total, basket);
+        }
+    }
+```
+
+The interface isn't strictly necessary, but it helps define the requirement.
+
+Then it could be used as follows:
+
+```csharp
+   var promoA = new MultiExample("A", 3, 130);
+   var promoB = new MultiExample("B", 2, 45);
+
+   var promotions = new List<Promotion>()
+   {
+       new Promotion("3 of A for 130", promoA.ApplyPromotion),
+       new Promotion("2 of b for 45", promoA.ApplyPromotion)
+   }
+```
+
