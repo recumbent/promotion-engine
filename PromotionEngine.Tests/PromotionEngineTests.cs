@@ -67,7 +67,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("A", 3, 50M)
             };
 
-            var promotions = new List<Promotion>() { new Promotion("3A for 130", Promotions.Multibuy) };
+            var promotions = new List<Promotion>() { new Promotion("3A for 130", Promotions.MakeMultibuy("A", 3, 130M)) };
             var engine = new PromotionEngine();
             var result = engine.TotalAfterPromotions(basket, promotions);
 
@@ -83,7 +83,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("D", 1, 15M)
             };
 
-            var promotions = new List<Promotion>() { new Promotion("C + D for 30", Promotions.PairedBuy) };
+            var promotions = new List<Promotion>() { new Promotion("C + D for 30", Promotions.MakePairedBuy("C", "D", 30M)) };
             var engine = new PromotionEngine();
             var result = engine.TotalAfterPromotions(basket, promotions);
 

@@ -10,15 +10,14 @@ namespace PromotionEngine.Tests
 {
     public class MultibuyTests
     {
-        // Assume 3 of A's for 130
+        // Create a multibuy promotion to test
+        private Func<List<BasketItem>, (decimal, List<BasketItem>)> Multibuy = Promotions.MakeMultibuy("A", 3, 130M);
 
-
-        // TODO: Ideally this would be a Theory (data driven) test for "don't apply" cases, need to see where we go first
         [Fact]
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -29,7 +28,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 2, 50) };
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -44,7 +43,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 3, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -55,7 +54,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("A", 3, 50) };
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             total.Should().Be(130M);
             newBasket.Should().BeEmpty();
@@ -66,7 +65,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
                 { new BasketItem("A", 4, 50) };
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
                 { new BasketItem("A", 1, 50) };
@@ -85,7 +84,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20), 
                 new BasketItem("D", 1, 15) 
             };
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             {
@@ -105,7 +104,7 @@ namespace PromotionEngine.Tests
             var basket = new List<BasketItem>()
             { new BasketItem("A", 10, 50) };
         
-            var (total, newBasket) = Promotions.Multibuy(basket);
+            var (total, newBasket) = this.Multibuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { new BasketItem("A", 1, 50) };

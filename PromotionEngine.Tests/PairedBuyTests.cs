@@ -10,15 +10,16 @@ namespace PromotionEngine.Tests
 {
     public class PairedBuyTests
     {
-        // Assume 3 of A's for 130
 
+        // Create a multibuy promotion to test
+        private Func<List<BasketItem>, (decimal, List<BasketItem>)> PairedBuy = Promotions.MakePairedBuy("C", "D", 30M);
 
         // TODO: Ideally this would be a Theory (data driven) test for "don't apply" cases, need to see where we go first
         [Fact]
         public void ShouldApplyShouldReturnZeroIfBasketIsEmpty()
         {
             var basket = new List<BasketItem>();
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -29,7 +30,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("C", 1, 20) };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -40,7 +41,7 @@ namespace PromotionEngine.Tests
         {
             var basket = new List<BasketItem>()
             { new BasketItem("D", 1, 15) };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -54,7 +55,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("A", 1, 50),
                 new BasketItem("B", 2, 30) 
             };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             total.Should().Be(0M);
             newBasket.Should().BeEquivalentTo(basket);
@@ -69,7 +70,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 0, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var (total1, newBasket1) = Promotions.PairedBuy(basket1);
+            var (total1, newBasket1) = this.PairedBuy(basket1);
 
             total1.Should().Be(0M);
             newBasket1.Should().BeEquivalentTo(basket1);
@@ -79,7 +80,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20),
                 new BasketItem("D", 0, 15) 
             };
-            var (total2, newBasket2) = Promotions.PairedBuy(basket2);
+            var (total2, newBasket2) = this.PairedBuy(basket2);
 
             total2.Should().Be(0M);
             newBasket2.Should().BeEquivalentTo(basket2);
@@ -94,7 +95,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("D", 1, 15)
             };
 
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             total.Should().Be(30M);
             newBasket.Should().BeEmpty();
@@ -108,7 +109,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 2, 20),
                 new BasketItem("D", 1, 15) 
             };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { 
@@ -128,7 +129,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20), 
                 new BasketItem("D", 4, 15) 
             };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             {
@@ -148,7 +149,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 4, 20),
                 new BasketItem("D", 3, 15) 
             };
-            var (total, newBasket) = Promotions.PairedBuy(basket);
+            var (total, newBasket) = this.PairedBuy(basket);
 
             var expectedBasket = new List<BasketItem>()
             { 

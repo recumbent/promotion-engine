@@ -18,42 +18,51 @@ namespace PromotionEngine
             return item;
         }
 
-        public static (decimal total, List<BasketItem> basket) Multibuy(List<BasketItem> basket)
+        private static (decimal total, List<BasketItem> basket) Multibuy(string sku, int quantity, decimal discountedPrice, List<BasketItem> basket)
         {
             bool ShouldApplyPromotion(List<BasketItem> basket)
             {
-                return basket.Exists(bi => (bi.Sku == "A" && bi.Quantity >= 3M));
+                return basket.Exists(bi => (bi.Sku == sku && bi.Quantity >= quantity));
             }
 
             var total = 0M;
             while (ShouldApplyPromotion(basket))
             {
-                basket = basket.Select(bi => ReduceQuantityForSku(bi, "A", 3)).Where(bi => bi.Quantity > 0).ToList();
-                total += 130;
+                basket = basket.Select(bi => ReduceQuantityForSku(bi, sku, quantity)).Where(bi => bi.Quantity > 0).ToList();
+                total += discountedPrice;
             }
 
             return (total, basket);
         }
 
-        public static (decimal total, List<BasketItem> basket) PairedBuy(List<BasketItem> basket)
+        public static Func<List<BasketItem>, (decimal, List<BasketItem>)> MakeMultibuy(string sku, int quantity, decimal discountedPrice)
+        {
+            return basket => Multibuy(sku, quantity, discountedPrice, basket); 
+        }
+
+        private static (decimal total, List<BasketItem> basket) PairedBuy(string sku1, string sku2, decimal discountedPrice, List<BasketItem> basket)
         {
             bool ShouldApplyPromotion(List<BasketItem> basket)
             {
-                return basket.Exists(bi => bi.Sku == "C" && bi.Quantity >= 1) &&
-                       basket.Exists(bi => bi.Sku == "D" && bi.Quantity >= 1);
+                return basket.Exists(bi => bi.Sku == sku1 && bi.Quantity >= 1) &&
+                       basket.Exists(bi => bi.Sku == sku2 && bi.Quantity >= 1);
             }
 
-            var total = 0;
+            var total = 0M;
             while (ShouldApplyPromotion(basket))
             {
                 basket = basket
-                            .Select(bi => Promotions.ReduceQuantityForSku(bi, "C", 1))
-                            .Select(bi => Promotions.ReduceQuantityForSku(bi, "D", 1))
+                            .Select(bi => Promotions.ReduceQuantityForSku(bi, sku1, 1))
+                            .Select(bi => Promotions.ReduceQuantityForSku(bi, sku2, 1))
                             .Where(bi => bi.Quantity > 0).ToList();
-                total += 30;
+                total += discountedPrice;
             }
 
             return (total, basket);
+        }
+        public static Func<List<BasketItem>, (decimal, List<BasketItem>)> MakePairedBuy(string sku1, string sku2, decimal discountedPrice)
+        {
+            return basket => PairedBuy(sku1, sku2, discountedPrice, basket); 
         }
     }
 }

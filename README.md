@@ -128,3 +128,5 @@ Then it could be used as follows:
    }
 ```
 
+But that's still more than is needed to solve the problem as described - what's needed here is a function that returns a function which C# lets us do with lambdas
+
