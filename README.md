@@ -1,4 +1,4 @@
-# Promotion Engine
+﻿# Promotion Engine
 
 Coding exercise in .NET / C#
 
@@ -136,3 +136,8 @@ So make the functions private and add `MakePromotion` functions to the promotion
 
 At this point there's no need for a promotion engine at all given the implementation, so take it out.
 
+## Show me the objects...
+
+The code now solves the problem in a neat, concise, fashion - but its very functional (its a functional problem), but there is also a requirement to show OO code 🤔
+
+Lets assume we need a pricing service, and build something that has dependencies. I'm going to do this without tests first as its outside the original scope, but it will use interfaces to allow for testing etc.
