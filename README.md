@@ -130,3 +130,5 @@ Then it could be used as follows:
 
 But that's still more than is needed to solve the problem as described - what's needed here is a function that returns a function which C# lets us do with lambdas
 
+So make the functions private and add `MakePromotion` functions to the promotions class - that gives us everything needed to write the scenario tests in a neat, concise fashion.
+

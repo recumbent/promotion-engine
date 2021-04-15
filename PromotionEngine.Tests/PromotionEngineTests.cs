@@ -89,5 +89,65 @@ namespace PromotionEngine.Tests
 
             result.Should().Be(30);
         }
+
+        // ==============
+        // SCENARIO TESTS
+        // ==============
+
+        private readonly List<Promotion> scenarioPromotions = new List<Promotion>()
+            {
+                new Promotion("3A for 130", Promotions.MakeMultibuy("A", 3, 130M)),
+                new Promotion("2B for 45", Promotions.MakeMultibuy("B", 2, 45M)),
+                new Promotion("C & D for 30", Promotions.MakePairedBuy("C", "D", 30M))
+            };
+
+        [Fact]
+        public void ScenarioA()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 1, 50),
+                new BasketItem("B", 1, 30),
+                new BasketItem("C", 1, 20)
+            };
+
+            var engine = new PromotionEngine();
+            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+
+            total.Should().Be(100M);
+        }
+
+        [Fact]
+        public void ScenarioB()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 5, 50),
+                new BasketItem("B", 5, 30),
+                new BasketItem("C", 1, 20)
+            };
+
+            var engine = new PromotionEngine();
+            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+
+            total.Should().Be(370M);
+        }
+
+        [Fact]
+        public void ScenarioC()
+        {
+            var basket = new List<BasketItem>()
+            {
+                new BasketItem("A", 3, 50),
+                new BasketItem("B", 5, 30),
+                new BasketItem("C", 1, 20),
+                new BasketItem("D", 1, 15)
+            };
+
+            var engine = new PromotionEngine();
+            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+
+            total.Should().Be(280M);
+        }
     }
 }
