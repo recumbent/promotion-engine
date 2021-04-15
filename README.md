@@ -4,6 +4,28 @@ Coding exercise in .NET / C#
 
 .NET 5.0 class library with tests and a console runner
 
+## Notes
+
+Running the console application will demonstrate the 3 scenarios in an example that its slightly beyond the scope of the exercise.
+
+The reason for the extended example is that the solution to the stated problem is very functional - the problem maps neatly to a functional solution. The `PricingService` is a more OO example, tending towards something that might exists as a serverless function.
+
+The scenarios are also covered by the last 3 tests in PromotionEngineTests.cs.
+
+### Of tests
+
+The tests, at this point, are more indicative than complete. I would use xUnit theory tests to run through a more comprehensive set of examples to better check and to look for edge cases. I would also usually use values other than those for the scenarios in general testing
+
+If you go back through the commits there are some interesting points where I've let the tooling do its thing and not picked up on issues - missing the `M` from decimals for example and returning an obj rather than the "right" values for a while. The tests always pass though...
+
+### Issues
+
+Using functions addresses the specific problem neatly, and the system as implemented would allow for easy configuration - one could parse json definining a list of promotions into a list of `Promotions` without too much effort. However this just calculates totals, there's no breakdown of how we get to the total, no list of promotions applied. The functions could be extended to provide that as part of the return value.
+
+In applying promotions I've used a loop and mutation where I might use a fold (a Linq Aggregate) the foreach loop is easier to read and being able to read the code is important
+
+Fun, but I spent too long...
+
 ## Tooling
 
 * [xUnit](https://github.com/xunit/xunit)
