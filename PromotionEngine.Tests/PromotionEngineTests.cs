@@ -23,8 +23,7 @@ namespace PromotionEngine.Tests
         [Fact]
         public void Empty_basket_should_return_total_of_zero()
         {
-            var engine = new PromotionEngine();
-            var result = engine.TotalAfterPromotions(emptyBasket, emptyPromotions);
+            var result = Promotions.TotalAfterPromotions(emptyBasket, emptyPromotions);
 
             result.Should().Be(0M);
         }
@@ -35,8 +34,7 @@ namespace PromotionEngine.Tests
             var itemPrice = 10M;
             var basket = new List<BasketItem>() { new BasketItem("A", 1, itemPrice) };
 
-            var engine = new PromotionEngine();
-            var result = engine.TotalAfterPromotions(basket, emptyPromotions);
+            var result = Promotions.TotalAfterPromotions(basket, emptyPromotions);
 
             result.Should().Be(itemPrice);
         }
@@ -53,8 +51,7 @@ namespace PromotionEngine.Tests
 
             var total = 2 * 20M + 3 * 30M + 4 * 40M;
 
-            var engine = new PromotionEngine();
-            var result = engine.TotalAfterPromotions(basket, emptyPromotions);
+            var result = Promotions.TotalAfterPromotions(basket, emptyPromotions);
 
             result.Should().Be(total);
         }
@@ -68,8 +65,7 @@ namespace PromotionEngine.Tests
             };
 
             var promotions = new List<Promotion>() { new Promotion("3A for 130", Promotions.MakeMultibuy("A", 3, 130M)) };
-            var engine = new PromotionEngine();
-            var result = engine.TotalAfterPromotions(basket, promotions);
+            var result = Promotions.TotalAfterPromotions(basket, promotions);
 
             result.Should().Be(130);
         }
@@ -84,8 +80,7 @@ namespace PromotionEngine.Tests
             };
 
             var promotions = new List<Promotion>() { new Promotion("C + D for 30", Promotions.MakePairedBuy("C", "D", 30M)) };
-            var engine = new PromotionEngine();
-            var result = engine.TotalAfterPromotions(basket, promotions);
+            var result = Promotions.TotalAfterPromotions(basket, promotions);
 
             result.Should().Be(30);
         }
@@ -111,8 +106,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20)
             };
 
-            var engine = new PromotionEngine();
-            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+            var total = Promotions.TotalAfterPromotions(basket, scenarioPromotions);
 
             total.Should().Be(100M);
         }
@@ -127,8 +121,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("C", 1, 20)
             };
 
-            var engine = new PromotionEngine();
-            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+            var total = Promotions.TotalAfterPromotions(basket, scenarioPromotions);
 
             total.Should().Be(370M);
         }
@@ -144,8 +137,7 @@ namespace PromotionEngine.Tests
                 new BasketItem("D", 1, 15)
             };
 
-            var engine = new PromotionEngine();
-            var total = engine.TotalAfterPromotions(basket, scenarioPromotions);
+            var total = Promotions.TotalAfterPromotions(basket, scenarioPromotions);
 
             total.Should().Be(280M);
         }

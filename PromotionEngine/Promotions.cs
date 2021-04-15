@@ -18,6 +18,26 @@ namespace PromotionEngine
             return item;
         }
 
+        private static decimal Total(List<BasketItem> basket)
+        {
+            return basket.Sum(item => item.Quantity * item.UnitCost);
+        }
+
+        public static decimal TotalAfterPromotions(List<BasketItem> basket, List<Promotion> promotions)
+        {
+            var total = 0M;
+
+            foreach(var promo in promotions)
+            {
+                var (promotionTotal, newBasket) = promo.Applicator(basket);
+                total += promotionTotal;
+                basket = newBasket;
+            }
+            
+            total += Total(basket);
+            return total;
+        }
+
         private static (decimal total, List<BasketItem> basket) Multibuy(string sku, int quantity, decimal discountedPrice, List<BasketItem> basket)
         {
             bool ShouldApplyPromotion(List<BasketItem> basket)

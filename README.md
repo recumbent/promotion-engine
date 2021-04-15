@@ -132,3 +132,7 @@ But that's still more than is needed to solve the problem as described - what's 
 
 So make the functions private and add `MakePromotion` functions to the promotions class - that gives us everything needed to write the scenario tests in a neat, concise fashion.
 
+## Why do we instantiate the promotion engine
+
+At this point there's no need for a promotion engine at all given the implementation, so take it out.
+
